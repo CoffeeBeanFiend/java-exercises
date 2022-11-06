@@ -35,7 +35,7 @@ public class SetOfAllNumbers {
         System.out.println("a = 7, p = 17");
         System.out.println(new ExponentModIterator(7, 17).getSet());
         System.out.println();
-        System.out.println("a = 7, p = 17");
+        System.out.println("a = 5, p = 61");
         System.out.println(new ExponentModIterator(5, 61).getSet());
         System.out.println();
 
