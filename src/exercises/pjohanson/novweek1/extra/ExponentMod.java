@@ -4,10 +4,10 @@ import java.math.BigInteger;
 
 public class ExponentMod {
     protected BigInteger alpha;
-    protected int power;
-    protected int mod;
+    protected BigInteger power;
+    protected BigInteger mod;
 
-    public ExponentMod(BigInteger alpha, int power, int mod) {
+    public ExponentMod(BigInteger alpha, BigInteger power, BigInteger mod) {
         this.alpha = alpha;
         this.power = power;
         this.mod = mod;
@@ -17,16 +17,16 @@ public class ExponentMod {
         return alpha;
     }
 
-    public int getPower() {
+    public BigInteger getPower() {
         return power;
     }
 
-    public int getMod() {
+    public BigInteger getMod() {
         return mod;
     }
 
-    public Integer getValue() {
-        return alpha.pow(getPower()).mod(BigInteger.valueOf(getMod())).intValue();
+    public BigInteger getValue() {
+        return alpha.modPow(getPower(), getMod());
     }
 
     @Override

@@ -7,19 +7,19 @@ import java.util.Set;
 
 public class ExponentModIterator implements Iterator<ExponentMod>, Iterable<ExponentMod> {
     protected BigInteger alpha;
-    protected int p;
+    protected BigInteger p;
 
-    protected int currentExponent;
+    protected BigInteger currentExponent;
 
     protected int extendIterator;
 
     public ExponentModIterator(int alpha, int p) {
-        this(Integer.toString(alpha), p);
+        this(Integer.toString(alpha), Integer.toString(p));
     }
-    public ExponentModIterator(String alpha, int p) {
+    public ExponentModIterator(String alpha, String p) {
         this.alpha = new BigInteger(alpha);
-        this.p = p;
-        this.currentExponent = 1;
+        this.p = new BigInteger(p);
+        this.currentExponent = BigInteger.ONE;
         this.extendIterator = 0;
     }
 
@@ -31,12 +31,14 @@ public class ExponentModIterator implements Iterator<ExponentMod>, Iterable<Expo
 
     @Override
     public boolean hasNext() {
-        return currentExponent <= p + extendIterator;
+        return currentExponent.compareTo(p.add(BigInteger.valueOf(extendIterator))) < 0;
     }
 
     @Override
     public ExponentMod next() {
-        return new ExponentMod(alpha, currentExponent++, p);
+        ExponentMod ret = new ExponentMod(alpha, currentExponent, p);
+        currentExponent = currentExponent.add(BigInteger.ONE);
+        return ret;
     }
 
     @Override
@@ -45,13 +47,13 @@ public class ExponentModIterator implements Iterator<ExponentMod>, Iterable<Expo
     }
 
     public ExponentModIterator rewind() {
-        currentExponent = 1;
+        currentExponent = BigInteger.ONE;
         return this;
     }
 
-    public Set<Integer> getSet() {
+    public Set<BigInteger> getSet() {
         this.rewind();
-        Set<Integer> set = new HashSet<>();
+        Set<BigInteger> set = new HashSet<>();
         for (ExponentMod expMod: this) {
             set.add(expMod.getValue());
         }
@@ -59,6 +61,7 @@ public class ExponentModIterator implements Iterator<ExponentMod>, Iterable<Expo
     }
 
     public boolean isGenerator() {
-        return this.getSet().size() == p - 1;
+        BigInteger pMinusOne = p.subtract(BigInteger.ONE);
+        return pMinusOne.compareTo(BigInteger.valueOf(getSet().size())) == 0;
     }
 }
