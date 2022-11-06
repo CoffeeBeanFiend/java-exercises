@@ -30,7 +30,7 @@ public class SetOfAllNumbers {
         }
 
         System.out.println();
-        System.out.println("Finally, get some sets (was asked in the exercise");
+        System.out.println("Finally, get some sets (was asked in the exercise)");
 
         System.out.println("a = 7, p = 17");
         System.out.println(new ExponentModIterator(7, 17).getSet());
